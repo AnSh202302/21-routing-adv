@@ -1,17 +1,18 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-import HomePage from "./pages/HomePage.jsx";
-import EventsPage, { loader as eventsLoader } from "./pages/EventsPage.jsx";
+import EditEventPage from "./pages/EditEventPage";
+import ErrorPage from "./pages/ErrorPage";
 import EventDetailPage, {
   loader as eventDetailLoader,
   action as deleteEventAction,
-} from "./pages/EventDetailPage.jsx";
-import NewEventPage from "./pages/NewEventPage.jsx";
-import EditEventPage from "./pages/EditEventPage.jsx";
-import RootLayout from "./pages/RootLayout.jsx";
-import EventsRootLayout from "./pages/EventsRootLayout.jsx";
-import ErrorPage from "./pages/ErrorPage.jsx";
-import { action as manipulateEventAction } from "./components/EventForm.js";
+} from "./pages/EventDetailPage";
+import EventsPage, { loader as eventsLoader } from "./pages/EventsPage";
+import EventsRootLayout from "./pages/EventsRootLayout";
+import HomePage from "./pages/HomePage";
+import NewEventPage from "./pages/NewEventPage";
+import RootLayout from "./pages/RootLayout";
+import { action as manipulateEventAction } from "./components/EventForm";
+import NewsletterPage, { action as newsletterAction } from "./pages/Newsletter";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
-
       {
         path: "events",
         element: <EventsRootLayout />,
@@ -31,9 +31,8 @@ const router = createBrowserRouter([
             loader: eventsLoader,
           },
           {
-            path: ":id",
+            path: ":eventId",
             id: "event-detail",
-
             loader: eventDetailLoader,
             children: [
               {
@@ -54,6 +53,11 @@ const router = createBrowserRouter([
             action: manipulateEventAction,
           },
         ],
+      },
+      {
+        path: "newsletter",
+        element: <NewsletterPage />,
+        action: newsletterAction,
       },
     ],
   },
